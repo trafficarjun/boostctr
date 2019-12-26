@@ -1,0 +1,13 @@
+.container.p-t-md
+  .row
+    .col-md-3
+      .list-group.m-b-md
+        .list-group-item{:href => "#"}
+          %span
+          %ul
+          - Dir.glob('app/views/ui/*.html.haml').sort.each do |file|
+            - wireframe = File.basename(file,'.html.haml')
+            -  unless wireframe == 'index' || wireframe.match(/^_/)
+              %li= link_to wireframe.titleize, action: wireframe unless wireframe == 'index'
+
+
