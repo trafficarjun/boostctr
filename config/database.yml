@@ -1,0 +1,21 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: boostctr_development
+  pool: 10
+  host: localhost
+  username: arjunrajkumar1
+  password: arjun
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: boostctr_test
+  pool: 10
+  host: localhost
+  username: arjunrajkumar1
+  password: arjun
+
+production:
+  url:  <%= ENV["DATABASE_URL"] %>
+  pool: <%= 10 %>
