@@ -100,6 +100,9 @@ GEM
       guard (~> 2.8)
       guard-compat (~> 1.0)
       multi_json (~> 1.8)
+    guard-minitest (2.4.6)
+      guard-compat (~> 1.2)
+      minitest (>= 3.0)
     haml (5.1.2)
       temple (>= 0.8.0)
       tilt
@@ -258,6 +261,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   guard
   guard-livereload (~> 2.5)
+  guard-minitest
   haml-rails
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
