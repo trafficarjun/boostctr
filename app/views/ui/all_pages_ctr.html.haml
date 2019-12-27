@@ -1,0 +1,40 @@
+.main-container.bg-white
+  - flash.each do |key, value|
+    .row.justify-content-center.text-center.mb-3
+      .col-12
+        .alert.alert-danger.mt-3{:role => "alert"}
+          %i.icon-shield
+          %span
+            = value
+  %section.space-sm.mt-0.pt-0
+    .bg-white.mb-5.pb-5
+      .container
+        .row.justify-content-center.text-center.section-intro.mt-0
+          .col-12.col-md-9.col-lg-8
+            %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+            %span.title-decorative Insights from analysing GSC
+            %h2.display-4 All Pages
+            %span.lead
+              Below is a list of pages that have the most to improve - i.e. these are pages that are ranking on the top 10 in Google, sorted by low CTRs. To get a more accurate CTR, we have removed branded keywords from the CTR calculations.
+          .col-12
+            %table.table.table-hover.align-items-center.table-borderless.mb-5.pb-5.bg-secondary.mt-1
+              %thead
+                %tr
+                  %th.text-left{:scope => "col"} Page
+                  %th{:scope => "col"} Impressions
+                  %th{:scope => "col"} Clicks
+                  %th{:scope => "col"} CTR
+                  %th{:scope => "col"}
+              %tbody
+                %tr.bg-white
+                  %th{:scope => "row"}
+                    .media.align-items-center
+                      .media-body
+                        = link_to root_path, { :class=>"" }, nil do
+                          %span.h6.mb-0.text-left page.url
+                  %td 100
+                  %td 100
+                  %td
+                    3.4
+                  %td= link_to "Tests", root_path
+                

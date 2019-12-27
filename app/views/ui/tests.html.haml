@@ -1,0 +1,113 @@
+.main-container.bg-white
+  %section.space-md
+    .bg-white
+      .container
+        .row
+          .col-12
+            - if notice
+              .alert.alert-warning.text-small{:role => "alert"}
+                %i.icon-shield
+                %span
+                  = notice
+            .text-left.mb-2
+              %h4.h4.mb-2
+                %i.icon-link.mr-1
+                page.url
+                %span.badge.badge-success Test Ongoing
+                
+            .alert.alert-info.mt-4.mb-0{:role => "alert"}
+              %i.icon-flash
+              %span
+                Google usually indexes a test within 1-3 days, so we will allow 3 days before we consider a test to be started.
+              .row.mt-2
+                .col-12.col-lg-9
+                  %span
+                    %div
+                      %i.icon-calendar.mr-1
+                      Test Started: Date
+                    %span
+                      %i.icon-calendar.mr-1
+                      Ending on: Date
+        / end of row
+      / end of container
+    .container.mt-3
+      .row.flex-md-row.card.card-lg.bg-secondary
+        .col-12.col-md-6.card-body
+          %div
+            %p.h4.mb-0.text-muted.text-small Listing before test (Old Listing):
+            .card.card-sm.mt-0.mb-3.bg-secondary{:style => "border: 1px solid white;"}
+              .card-body
+                %h4.mb-0{:style => "color: #1a0dab;"} previous_title
+                %span.mb-0.mt-0{:style => "color: #006621;"} page.url
+                %p.mt-0{:style => "color: #545454;"}
+                  previous_description
+        / end of col
+        .col-12.col-md-6.card-body
+          %div
+            %p.h4.mb-0.text-muted.text-small
+              %strong Listing after test started (Current Listing):
+            .card.card-sm.mt-0.mb-3
+              .card-body
+                %h4.mb-0{:style => "color: #1a0dab;"} title
+                %span.mb-0.mt-0{:style => "color: #006621;"} page.url
+                %p.mt-0{:style => "color: #545454;"}
+                  description
+        / end of col
+      .alert.alert-secondary.mt-5{:role => "alert"}
+        %i.icon-flash
+        %span
+          Google Search Console data is usually 3 days behind, so the results for each test periord will be updated 3 days post the date.
+      .row.mt-3
+        .col
+          %table.table.table-borderless.table-hover.align-items-center
+            %thead
+              %tr
+                %th{:scope => "col"}
+                %th{:scope => "col"} Clicks
+                %th{:scope => "col"} Impressions
+                %th{:scope => "col"} CTR
+                %th{:scope => "col"} Position
+            %tbody
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 Old Listing: One week performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        start_date
+                        to end_date
+                
+                %td
+                  %span
+                    \-
+                %td
+                  %span
+                    \-
+                %td
+                  %span
+                    \-
+                %td
+                  %span
+                    \-
+              
+      %p.mt-0
+      .text-muted.text-small
+        %i.icon-flash.mr-1>
+        Default Testing Time:
+        %span{:style => "color: #333;"}
+          By default each test runs for 4 weeks. This is ample time to see if the change you made is positive or negative. Google
+          %span
+      .text-muted.text-small
+        %i.icon-flash.mr-1>
+        Best Practices:
+        %span{:style => "color: #333;"}
+          When doing a test, aim to look at a window of time that gets you 2000 or more impressions on the search results. The higher the number, the better.
+          %span
+      .text-muted.text-small
+        %i.icon-flash.mr-1>
+        Note:
+        %span{:style => "color: #333;"}
+          Outside influences can change our confidence in the test—from a holiday weekend to seasonality to ranking changes—so it’s important to be wary of variables like that when setting up tests.
+          %span
+      

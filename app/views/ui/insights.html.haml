@@ -1,0 +1,68 @@
+
+.main-container.bg-white.mt-0
+  - flash.each do |key, value|
+    .row.justify-content-center.text-center.mb-3
+      .col-12
+        .alert.alert-danger.mt-3{:role => "alert"}
+          %i.icon-shield
+          %span
+            = value
+  %section.bg-white.mt-0.pt-2
+    .container.mt-0
+      .row.mb-5.mt-0
+        .col-12.text-right
+          %div
+            %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+            %span.text-small Insights got by analysing GSC last 90 days.
+            
+          %div
+            %span.text-muted.text-small.text-right
+              %u Automatically updated every 30 days.
+      .row.justify-content-center.text-center.mb-5.mt-2
+        .col-12.col-md-10.col-lg-10.text-center.mb-3
+          %h5.dispslay-5.mb-2 Transactional vs Informational pages
+          .mb-3
+            %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+            %span.text-small Show grpah
+          %span.mt-5 Your store has different type of pages - product pages, collection pages, static  pages (contact, about etc), and blogs.. The SERP results for transactional pages (product, collection) and information(blog + other pages) are totally different. Lots more ads + plus competition on top of SERP results for transactional pages. So, while calculating CTRs it helps to compare a page to its parent group’s CTR - transactional or informational  - instead of the whole site.
+          .row.mt-3
+            .col.text-center
+              .mb-3
+                = link_to "Product + Collection Pages", root_path, class: "btn btn-secondary mb-1"
+                = link_to "Blog Pages", root_path, class: "btn btn-secondary mb-1"
+                = link_to "Other Pages", root_path, class: "btn btn-secondary mb-1"
+          .row
+            .col-12.text-center
+              %hr.shorts.mt-2.mb-0/
+      .row.justify-content-center.text-center.mb-5.mt-2
+        .col-12.col-md-10.col-lg-10.text-center.mb-3
+          %h5.displsay-5.mb-2 Generic vs long-tail keywords
+          .mb-3
+            %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+            %span.text-small Show graph. 
+          %span.mt-5 GSC combines all keywords into one group.. But splitting it out shows how targeting long-tail (4+ words) usually has a higher CTR than 1,2 or 3 word keywords. The long tails keywords has less competition, and are generally easier to rank.
+          .row.mt-3
+            .col.text-center
+              .mb-3
+                = link_to "1 word keywords", root_path, class: "btn btn-secondary mb-1"
+                = link_to "2 words keywords", root_path, class: "btn btn-secondary mb-1"
+                = link_to "3 words keywords", root_path, class: "btn btn-secondary mb-1"
+                = link_to "4+ words keywords", root_path, class: "btn btn-secondary mb-1"
+          .row
+            .col-12.text-center
+              %hr.shorts.mt-2.mb-0/
+      .row.justify-content-center.text-center.section-intro
+        .col-12.col-md-10.col-lg-10.text-center.mb-3
+          %h5.dissplay-5.mb-2 Branded vs Non Branded Keywords
+          .mb-3
+            %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+            %span.text-small Updating graph. Please check back in a few minutes.
+          %span.mt-5 The average CTR shown by GSC combines both branded and non-branded keywords and is misleading. People searching for your brand already know you, and hence are more likely to click your listing. So, including branded keywords throws off the average site-wide CTR. Calculating CTRs separately for branded and non-branded shows a different/truer picture.
+          .row.mt-3
+            .col.text-center
+              .mb-3
+                = link_to "Branded Keywords", root_path, class: "btn btn-secondary mb-1"
+                = link_to "Non-branded Keywords", root_path, class: "btn btn-secondary mb-1"
+          .row
+            .col-12.text-center
+              %hr.shorts.mt-2.mb-0/
