@@ -1,0 +1,35 @@
+%h1 Listing pages
+
+%table
+  %thead
+    %tr
+      %th Url
+      %th Testing
+      %th Content
+      %th Shop
+      %th Slug
+      %th Expected ctr
+      %th Handle
+      %th Shopify page type
+      %th
+      %th
+      %th
+
+  %tbody
+    - @pages.each do |page|
+      %tr
+        %td= page.url
+        %td= page.testing
+        %td= page.content
+        %td= page.shop_id
+        %td= page.slug
+        %td= page.expected_ctr
+        %td= page.handle
+        %td= page.shopify_page_type
+        %td= link_to 'Show', page
+        %td= link_to 'Edit', edit_page_path(page)
+        %td= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Page', new_page_path
