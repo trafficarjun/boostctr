@@ -29,13 +29,19 @@ gem 'haml-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'shopify_app'
+gem 'fabrication'
+gem 'factory_bot_rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem "guard"
   gem 'guard-livereload', '~> 2.5', require: false
-  gem 'guard-minitest'
+  gem 'guard-minitest', require: false
+  gem 'guard-rspec', require: false
+  gem 'rspec-rails', '~> 3.9.0'
+  gem 'pry'
+  gem 'pry-nav'
 end
 
 group :development do
@@ -56,6 +62,10 @@ group :test do
   gem 'webdrivers'
   gem 'minitest'
   gem 'minitest-reporters'
+  gem 'capybara-email'
+  gem 'database_cleaner', '1.4.1'
+  gem 'shoulda-matchers', '2.7.0'
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
