@@ -1,0 +1,34 @@
+= form_for @page do |f|
+  - if @page.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
+      %ul
+        - @page.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :url
+    = f.text_area :url
+  .field
+    = f.label :testing
+    = f.check_box :testing
+  .field
+    = f.label :content
+    = f.text_area :content
+  .field
+    = f.label :shop_id
+    = f.number_field :shop_id
+  .field
+    = f.label :slug
+    = f.text_area :slug
+  .field
+    = f.label :expected_ctr
+    = f.text_field :expected_ctr
+  .field
+    = f.label :handle
+    = f.text_area :handle
+  .field
+    = f.label :shopify_page_type
+    = f.text_area :shopify_page_type
+  .actions
+    = f.submit 'Save'

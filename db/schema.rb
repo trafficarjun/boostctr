@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_27_031702) do
+ActiveRecord::Schema.define(version: 2019_12_28_052600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pages", force: :cascade do |t|
+    t.text "url"
+    t.boolean "testing"
+    t.text "content"
+    t.integer "shop_id"
+    t.text "slug"
+    t.string "expected_ctr"
+    t.text "handle"
+    t.text "shopify_page_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_id", "url"], name: "index_pages_on_shop_id_and_url", unique: true
+  end
 
   create_table "shops", force: :cascade do |t|
     t.string "shopify_domain", null: false
@@ -24,6 +38,8 @@ ActiveRecord::Schema.define(version: 2019_12_27_031702) do
     t.string "domain"
     t.string "slug"
     t.boolean "subscribed", default: true
+    t.string "google_website"
+    t.string "brand_name"
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 

@@ -4,3 +4,4 @@ regular_shop:
   email: 'email@regular-shop.com'
   domain: 'regular-shop.com'
   subscribed: true
+  google_website: 'regular-shop.myshopify.com'
