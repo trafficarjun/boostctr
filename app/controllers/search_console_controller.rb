@@ -43,21 +43,7 @@ class SearchConsoleController < AuthenticatedController
         else
           @shop.update(google_website: selected_website, shopify_domain_google_website_match: false)
         end
-        SearchConsole::SaveWebsiteAndGetPagesWorker.perform_async(@shop.id, selected_website) 
-        Partials::Pages::ListJob.set(wait_until: 10.seconds.from_now).perform_later(@shop.id)
-        Partials::Pages::ListJob.set(wait_until: 20.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 40.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 80.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 120.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 150.seconds.from_now).perform_later(@shop.id)
-        Partials::Pages::ListJob.set(wait_until: 180.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 210.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 240.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 270.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 300.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 400.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 500.seconds.from_now).perform_later(@shop.id) 
-        Partials::Pages::ListJob.set(wait_until: 600.seconds.from_now).perform_later(@shop.id) 
+        SearchConsole::GetPagesFirstTimeWorker.perform_async(@shop.id)
       end
       redirect_to root_path
     end
@@ -71,8 +57,8 @@ class SearchConsoleController < AuthenticatedController
       { "web" =>
         { "access_token" => @shop.google_token,
           "refresh_token" => @shop.google_refresh_token,
-          "client_id" => "489705980657-8us4ok0caae4mc8kggs24q7818iu695p.apps.googleusercontent.com",
-          "client_secret" => "yUm-0m8e0UhZwCcAMfWGD9rZ"
+          "client_id" => Rails.application.credentials.google_key,
+          "client_secret" => Rails.application.credentials.google_secret
         }
       })
   end

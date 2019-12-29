@@ -55,12 +55,11 @@ feature "onboarding" do
     visit select_website_path
     
     expect(page).to have_content '3/5 steps completed'
-    select "http://www.thepaul.in/", from: "selected_website" 
+    select "https://arjun-shop.myshopify.com/", from: "selected_website" 
     click_button "Next" 
-    
+
+
     expect(page).to have_content '4/5 steps completed'
-    save_and_open_page 
-    
   end
 end
 

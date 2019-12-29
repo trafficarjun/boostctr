@@ -1,4 +1,15 @@
 class Page < ApplicationRecord
+  has_many :page_keywords, dependent: :destroy
+  has_many :keywords, -> { order("created_at DESC")}, through: :page_keywords
+  
+  has_many :page_stats, dependent: :destroy
+  has_many :stats, through: :page_stats
+  
+  has_many :tests, -> { order("created_at DESC")} , dependent: :destroy
+  
+  has_one :insight, dependent: :destroy
+  has_one :store, dependent: :destroy
+  
   validates_uniqueness_of :url, :scope => :shop_id
   
   belongs_to :shop
@@ -7,8 +18,6 @@ class Page < ApplicationRecord
   sluggable_column :url
   
   after_create :save_handle_shopify_type
-  
-  has_many :tests, -> { order("created_at DESC")} , dependent: :destroy
   
 
   def save_handle_shopify_type
@@ -19,7 +28,7 @@ class Page < ApplicationRecord
       handle = url.match(/\/([^\/]+)\/?$/)[1]
     rescue 
       #error occurs when url does not contain a /
-      puts "error inside page.rb"
+      puts "errir inside page.rb"
       puts url
     else
       if url.include? "products"

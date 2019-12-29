@@ -8,7 +8,6 @@ class SessionsController < AuthenticatedController
     refresh_token = access_token.credentials.refresh_token
     shop.google_refresh_token = refresh_token if refresh_token.present?
     shop.save
-    binding.pry
     redirect_to select_website_path
   end
 end

@@ -44,7 +44,6 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem "guard"
   gem 'guard-livereload', '~> 2.5', require: false
-  gem 'guard-minitest', require: false
   gem 'guard-rspec', require: false
   gem 'rspec-rails', '~> 3.9.0'
   gem 'pry'
@@ -59,6 +58,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "rack-livereload"
+  gem 'rb-readline'
 end
 
 group :test do

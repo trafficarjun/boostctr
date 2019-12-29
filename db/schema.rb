@@ -10,10 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_29_085743) do
+ActiveRecord::Schema.define(version: 2019_12_29_103202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clicks", force: :cascade do |t|
+    t.integer "shop_id"
+    t.string "ctr_type"
+    t.integer "rank"
+    t.integer "ctr"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "insights", force: :cascade do |t|
+    t.string "clicks"
+    t.string "impressions"
+    t.string "position"
+    t.integer "page_id"
+    t.integer "shop_id"
+    t.text "shopify_page_type"
+    t.float "ctr"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "keyword_stats", force: :cascade do |t|
+    t.integer "stat_id"
+    t.integer "keyword_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.text "name"
+    t.integer "shop_id"
+    t.text "slug"
+    t.boolean "includes_brand_name"
+    t.integer "keyword_count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_id", "name"], name: "index_keywords_on_shop_id_and_name", unique: true
+  end
+
+  create_table "page_keyword_stats", force: :cascade do |t|
+    t.integer "stat_id"
+    t.integer "page_keyword_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stat_id", "page_keyword_id", "created_at"], name: "uniq_page_stat_key_date", unique: true
+  end
+
+  create_table "page_keywords", force: :cascade do |t|
+    t.integer "page_id"
+    t.integer "keyword_id"
+    t.integer "shop_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["keyword_id", "page_id"], name: "index_page_keywords_on_keyword_id_and_page_id", unique: true
+  end
+
+  create_table "page_stats", force: :cascade do |t|
+    t.integer "page_id"
+    t.integer "stat_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stat_id", "page_id", "created_at"], name: "unique_page_stat_date", unique: true
+  end
 
   create_table "pages", force: :cascade do |t|
     t.text "url"
@@ -27,6 +91,20 @@ ActiveRecord::Schema.define(version: 2019_12_29_085743) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["shop_id", "url"], name: "index_pages_on_shop_id_and_url", unique: true
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "name"
+    t.string "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "shop_plans", force: :cascade do |t|
+    t.integer "shop_id"
+    t.integer "plan_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "shops", force: :cascade do |t|
@@ -46,6 +124,23 @@ ActiveRecord::Schema.define(version: 2019_12_29_085743) do
     t.datetime "expiresat"
     t.boolean "shopify_domain_google_website_match", default: true
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
+  end
+
+  create_table "stats", force: :cascade do |t|
+    t.string "clicks"
+    t.string "impressions"
+    t.string "ctr"
+    t.string "position"
+    t.integer "shop_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "shopify_id"
+    t.integer "page_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tests", force: :cascade do |t|
