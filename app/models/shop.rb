@@ -1,11 +1,20 @@
 class Shop < ActiveRecord::Base
   include ShopifyApp::SessionStorage
-
+  
+  has_many :keywords, -> { order("created_at DESC")} , dependent: :destroy
+  has_many :pages, dependent: :destroy
+  has_many :insights, -> { order("ctr ASC")} , dependent: :destroy
+  has_many :clicks, dependent: :destroy
+  has_many :tests, -> { order("created_at DESC")} , dependent: :destroy
+  has_many :stats, -> { order("created_at DESC")} , dependent: :destroy
+  
+  has_many :page_keywords, -> { order("created_at DESC")} , dependent: :destroy
+  
   include Sluggable
   sluggable_column :shopify_domain
-  
-  has_many :pages, dependent: :destroy
-  has_many :tests, -> { order("created_at DESC")} , dependent: :destroy
+  has_many :shop_plans
+  has_many :plans, through: :shop_plans
+  after_create :free_plan
   
   def api_version
     ShopifyApp.configuration.api_version
