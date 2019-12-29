@@ -31,6 +31,13 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'shopify_app'
 gem 'fabrication'
 gem 'factory_bot_rails'
+gem 'simple_form'
+gem 'google-api-client', '~> 0.34'
+gem 'omniauth-google-oauth2'
+gem 'rest-client', '~> 1.8'
+gem 'sidekiq'
+gem 'will_paginate', '~> 3.1.0'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

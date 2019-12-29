@@ -8,6 +8,8 @@ class Page < ApplicationRecord
   
   after_create :save_handle_shopify_type
   
+  has_many :tests, -> { order("created_at DESC")} , dependent: :destroy
+  
 
   def save_handle_shopify_type
     url = self.url

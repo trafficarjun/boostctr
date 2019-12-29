@@ -7,5 +7,7 @@ class HomeController < AuthenticatedController
     email = ShopifyAPI::Shop.current.customer_email
     @shop = Shop.find_by shopify_domain: myshopify_domain
     @shop.update_email_domain(email, domain)
+    @pages = @shop.pages.paginate(page: params[:page], per_page: 50)
+    @tests = @shop.tests.first(10)
   end
 end

@@ -1,0 +1,187 @@
+= render partial: 'shared/header', :locals => { :active => 'Home' }
+.main-container.bg-white
+  - flash.each do |key, value|
+    .row.justify-content-center.text-center.mb-3
+      .col-12
+        .alert.alert-danger.mt-3{:role => "alert"}
+          %i.icon-shield
+          %span
+            = value
+  - if @shop.google_website == nil
+    %section.bg-white.space-sm.pb-0
+      .container
+        .row.justify-content-center.text-center.mt-0
+          .col-sm-6.justify-content-center.text-center.bg-white
+            - if @shop.brand_name
+              .mb-4.text-center
+                %h3.h2.mb-2
+                  %strong Onboarding Guide
+                .progress
+                  .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "40", :role => "progressbar", :style => "width: 40%;"} 40%
+              %span.text-muted.text-center.mb-1 2/5 steps completed
+              %ul.list-group.list-group-flush{:style => "border: 1px solid #fff;"}
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between
+                    %div{:style => "text-decoration: line-through;"}
+                      %i.icon-check.mr-1.text-green
+                      Install BoostCTR
+                    %span Completed
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between
+                    %div{:style => "text-decoration: line-through;"}
+                      %i.icon-check.mr-1.text-green
+                      Shop Name
+                    %span Completed
+                %li.list-group-item
+                  .d-flex.justify-content-between
+                    %div
+                      %i.icon-circle.mr-1>
+                      Connect Search Console
+                    %span Ongoing
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between.text-muted
+                    %div{:style => ""}
+                      %i.icon-check.mr-1.text-muted>
+                      Select Website from GSC
+                    %span
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between.text-muted
+                    %div{:style => ""}
+                      %i.icon-check.mr-1.text-muted>
+                      Start SEO Test
+                    %span
+              = link_to "Connect Google Search Console", '/auth/google_oauth2' , class: "btn btn-success btn-lg mt-4"
+              %small *We need your permission to access your Google Search Console data, so we can accurately measure the impact of your changes.
+            - else
+              .mb-4.text-center
+                %h3.h2.mb-2
+                  %strong Onboarding Guide
+                .progress
+                  .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "20", :role => "progressbar", :style => "width: 20%;"} 20%
+              %span.text-muted.text-center.mb-1 1/5 steps completed
+              %ul.list-group.list-group-flush{:style => "border: 1px solid #fff;"}
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between
+                    %div{:style => "text-decoration: line-through;"}
+                      %i.icon-check.mr-1.text-green
+                      Install BoostCTR
+                    %span Completed
+                %li.list-group-item
+                  .d-flex.justify-content-between
+                    %div
+                      %i.icon-circle.mr-1>
+                      Shop Name
+                    %span Ongoing
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between.text-muted
+                    %div{:style => ""}
+                      %i.icon-check.mr-1.text-muted>
+                      Connect Search Console (GSC)
+                    %span
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between.text-muted
+                    %div{:style => ""}
+                      %i.icon-check.mr-1.text-muted>
+                      Select Website from GSC
+                    %span
+                %li.list-group-item.bg-secondary
+                  .d-flex.justify-content-between.text-muted
+                    %div{:style => ""}
+                      %i.icon-check.mr-1.text-muted>
+                      Start SEO Test
+                    %span
+              .col-12.card-body.bg-white
+                = simple_form_for [@shop], html: { class: "mb-4 mt-2"}  do |f|
+                  %label{:for => "brand-name"}
+                    Enter Shop/Brand Name
+                    %span.text-red *
+                  = f.text_field :brand_name, placeholder: "Enter Shop/Brand Name", class: 'input form-control m-b-md', autofocus: true
+                  .text-center.mt-2
+                    %button.btn.btn-md.btn-success.mb-2{:type => "submit"} Save
+                  .text-left
+                    %span.text-small.text-muted
+                      *While calculating CTR's it’s important to remove all branded keywords from your Google Search Console data - as branded keywords have high CTR’s and will throw off the averages of your non-branded searches. To do this, we require your brand name.
+  - else
+    %section.space-md
+      - if @tests.count != 0
+        .bg-white
+          .container
+            .row.justify-content-center.text-center.section-intro
+              .col-12.col-md-8.col-lg-7
+                %h1.display-3
+                  %strong On-page SEO Tests
+                %span.lead Boost your organic click-through rates by split testing on-page SEO tags (page titles and meta descriptions)
+            .row
+              .col
+                %table.table.table-borderless.table-hover.align-items-center
+                  %thead
+                    %tr
+                      %th{:scope => "col"} Tests
+                      %th{:scope => "col"} Clicks
+                      %th{:scope => "col"} Impressions
+                      %th{:scope => "col"} CTR
+                      %th{:scope => "col"} Position
+                  %tbody
+                    = render partial: 'shops/pages/tests/test', collection: @tests
+              / end of col
+      - else
+        .bg-white
+          .container
+            .row.justify-content-center.text-center.mt-0
+              .col-sm-6.justify-content-center.text-center.bg-white
+                .mb-4.text-center
+                  %h3.h2.mb-2
+                    %strong Onboarding Guide
+                  .progress
+                    .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "80", :role => "progressbar", :style => "width: 80%;"} 80%
+                %span.text-muted.text-center.mb-1 4/5 steps completed
+                %ul.list-group.list-group-flush{:style => "border: 1px solid #fff;"}
+                  %li.list-group-item.bg-secondary
+                    .d-flex.justify-content-between
+                      %div{:style => "text-decoration: line-through;"}
+                        %i.icon-check.mr-1.text-green
+                        Install BoostCTR
+                      %span Completed
+                  %li.list-group-item.bg-secondary
+                    .d-flex.justify-content-between
+                      %div{:style => "text-decoration: line-through;"}
+                        %i.icon-check.mr-1.text-green
+                        Shop Name
+                      %span Completed
+                  %li.list-group-item.bg-secondary
+                    .d-flex.justify-content-between
+                      %div{:style => "text-decoration: line-through;"}
+                        %i.icon-check.mr-1.text-green>
+                        Connect Search Console
+                      %span Completed
+                  %li.list-group-item.bg-secondary
+                    .d-flex.justify-content-between
+                      %div{:style => "text-decoration: line-through;"}
+                        %i.icon-check.mr-1.text-green>
+                        Select Website
+                      %span Completed
+                  %li.list-group-item
+                    .d-flex.justify-content-between
+                      %div
+                        %i.icon-circle.mr-1>
+                        Start SEO Test
+                      %span Ongoing
+      .bg-white.mb-5.pb-5
+        .container
+          .row.justify-content-center.text-center.section-intro.mt-5.mb-0
+            .col-12.col-md-10.col-lg-10.text-center.mb-3
+              %h4.mb-2 Pages from Google Search Console
+              - if @tests.count != 0 || @shop.created_at + 60.minutes > Time.now
+                %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+                = link_to "Check out the Insights Page to see more from your GSC data.", insights_shop_pages_path(@shop), class: "nav-link"
+              - else
+                %span.text-small
+                  = link_to "Check out the Insights Page to see more from your GSC data.", insights_shop_pages_path(@shop), class: "nav-link"
+          %table.table.table-hover.align-items-center.table-borderless.mb-5.bg-secondary.pb-5
+            %thead
+              %tr
+                %th{:scope => "col"} Page
+                %th{:scope => "col"}
+            %tbody{"data-controller" => "realtime-partial", "data-realtime-partial-key" => "pages/list"}
+              = render partial: 'shops/pages/page', collection: @pages
+  

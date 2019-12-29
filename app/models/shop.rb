@@ -1,6 +1,12 @@
 class Shop < ActiveRecord::Base
   include ShopifyApp::SessionStorage
 
+  include Sluggable
+  sluggable_column :shopify_domain
+  
+  has_many :pages, dependent: :destroy
+  has_many :tests, -> { order("created_at DESC")} , dependent: :destroy
+  
   def api_version
     ShopifyApp.configuration.api_version
   end
@@ -10,11 +16,6 @@ class Shop < ActiveRecord::Base
       self.update(email: email, domain: domain) 
     end
   end
-  
-  include Sluggable
-  sluggable_column :shopify_domain
-  
-  has_many :pages, dependent: :destroy
   
   def free_plan
     if !Plan.any?

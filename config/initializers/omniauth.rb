@@ -1,6 +1,8 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
 # frozen_string_literal: true
 
+provider :google_oauth2, Rails.application.credentials.google_key, Rails.application.credentials.google_secret, {scope: "userinfo.email, webmasters.readonly"}
+
 provider :shopify,
   ShopifyApp.configuration.api_key,
   ShopifyApp.configuration.secret,
