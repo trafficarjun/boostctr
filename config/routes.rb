@@ -53,5 +53,11 @@ Rails.application.routes.draw do
       end
     end
   end
+  
+  controller :mandatory_webhooks do
+    post '/webhooks/shop_redact' => :shop_redact
+    post '/webhooks/customers_redact' => :customers_redact
+    post '/webhooks/customers_data_request' => :customers_data_request
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
