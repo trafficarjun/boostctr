@@ -44,6 +44,11 @@ class SearchConsoleController < AuthenticatedController
           @shop.update(google_website: selected_website, shopify_domain_google_website_match: false)
         end
         SearchConsole::GetPagesFirstTimeWorker.perform_async(@shop.id)
+        #add sidekiq batches instead - paid plan when upgraded
+        30.times do |i|
+          n = i * 20
+          Partials::Pages::ListJob.set(wait_until: n.seconds.from_now).perform_later(@shop.id)
+        end
       end
       redirect_to root_path
     end
