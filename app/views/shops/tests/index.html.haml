@@ -1,0 +1,30 @@
+= render partial: 'shared/header', :locals => { :active => 'Home' }
+.main-container.bg-white
+  - flash.each do |key, value|
+    .row.justify-content-center.text-center.mb-3
+      .col-12
+        .alert.alert-danger.mt-3{:role => "alert"}
+          %i.icon-shield
+          %span
+            = value
+  %section.space-md
+    .bg-white
+      .container
+        .row.justify-content-center.text-center.section-intro
+          .col-12.col-md-8.col-lg-7
+            %h1.display-3
+              %strong On-page SEO Tests
+            %span.lead Boost your organic click-through rates by split testing on-page SEO tags (page titles and meta descriptions)
+        .row
+          .col
+            %table.table.table-borderless.table-hover.align-items-center
+              %thead
+                %tr
+                  %th{:scope => "col"} Tests
+                  %th{:scope => "col"} Clicks
+                  %th{:scope => "col"} Impressions
+                  %th{:scope => "col"} CTR
+                  %th{:scope => "col"} Position
+              %tbody
+                = render partial: 'shops/pages/tests/test', collection: @tests
+          / end of col

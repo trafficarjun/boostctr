@@ -145,12 +145,13 @@ class Shops::Pages::TestsController < ApplicationController
     @shop = Shop.find_by slug: params[:shop_id]
     @page = @shop.pages.find_by slug: params[:page_id]
     @test = @page.tests.find_by id: params[:id]
-    ending_date = Time.current - 1.day
-    two_week_after_ending_date = Time.current - 1.days
-    four_week_after_ending_date = Time.current - 1.days
+    ending_date = Time.current - 3.days
+    two_week_after_ending_date = Time.current - 3.days
+    four_week_after_ending_date = Time.current - 3.days
     @test.update(is_test_over: true, ending_date: ending_date, two_week_after_ending_date: two_week_after_ending_date, 
       four_week_after_ending_date: four_week_after_ending_date
     )
+    @page.update(testing: false)
     redirect_to shop_page_test_path(@shop, @page, @test), notice: 'Test was successfully ended.' 
   end
   

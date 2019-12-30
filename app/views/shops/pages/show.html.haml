@@ -1,6 +1,5 @@
 = render partial: 'shared/header', :locals => { :active => 'Home' }
 .main-container.bg-white
-  = @page.store.shopify_id
   - if @tests.count != 0
     %section.bg-white.space-lg.pb-0
       .container

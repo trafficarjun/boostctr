@@ -1,0 +1,21 @@
+.nav-container
+  .bg-white.navbar-light{"data-sticky" => "top"}
+    .container
+      %nav.navbar.navbar-expand-lg
+        = link_to root_path, { :class=>"navbar-brand" }, nil do
+          %img.navbar-brand-img{:alt => "BCC", :src => "https://boostctr.s3.ap-south-1.amazonaws.com/logo.png", :style => "max-height: 4.4rem;"}/
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+          %i.icon-menu.h4
+        #navbarNav.collapse.navbar-collapse.justify-content-between
+          %ul.navbar-nav
+            %li.nav-item
+              = link_to "Home", root_path, class: "nav-link"
+            - if @shop.google_website
+              - if @shop.tests.count != 0
+                %li.nav-item
+                  = link_to "SEO Tests", shop_tests_path(@shop), class: "nav-link"
+              %li.nav-item
+                = link_to "Insights", insights_shop_pages_path(@shop), class: "nav-link"
+            
+        / end nav collapse
+    / end of container
