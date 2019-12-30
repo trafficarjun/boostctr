@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root :to => 'home#index'
   mount ShopifyApp::Engine, at: '/'
   get 'ui(/:action)', controller: 'ui'
+  get 'privacy', to: "front#privacy"
   
   resources :shops, only: [:show, :destroy, :update] do 
     resources :keywords, module: :shops 
