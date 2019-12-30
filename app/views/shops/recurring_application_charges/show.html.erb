@@ -1,0 +1,142 @@
+<%= render partial: 'shared/header', :locals => { :active => 'Plan' } %>
+<section class="pt-1">
+  <div class="container"> 
+    
+    <div class="row justify-content-center text-center mb-3">
+      <div class="col-12">
+              
+        <% flash.each do |key, value| %>
+          <div class="alert alert-danger mt-3" role="alert">
+            <i class="icon-shield"></i>
+            <span>
+                <%= value %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row justify-content-center text-center section-intro mt-0 mb-0">
+      <div class="col-12 col-md-9 col-lg-8">
+        
+        <div class="card card-borderless bg-gradient text-white  justify-content-center text-center">
+          <div class="card-body justify-content-center text-center" href="#">
+            <% if  (@plan.name == 'Free') && (@end_date > Date.today) %>
+              <span class="h6">
+                You are currently on the free trial until 
+                <%= fix_time(@end_date) %>
+              </span>
+            <% elsif (@plan.name == 'Free') %>
+              <span class="h6">
+                Please subscribe to continue. 
+              </span>
+            <% else %>
+              <span class="h6">You are currently susbcribed to the <%= @plan.name %> plan.</span>
+            <% end %>
+          </div>
+        </div>
+       
+
+      </div>    
+    </div>
+    <div class="row justify-content-center text-center section-intro mt-2">
+      <div class="col-12 col-md-9 col-lg-8">
+        <span class="title-decorative">-</span>
+        <h2 class="display-5">Simple and affordable pricing</h2> 
+      </div>    
+    </div>
+    <div class="row justify-content-center">
+      <div class="col">
+        <table class="table table-bordered table-responsive pricing">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">
+                <h5>Growth</h5>
+              </th>
+              <th scope="col">
+                <h5>Business</h5>
+              </th>
+              <th scope="col">
+                <h5>Agency</h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Price</td>
+              <td>
+                <span class="display-5">
+                  $29
+                  <span class="text-small">/ month</span>
+                </span>
+              </td>
+              <td>
+                <span class="display-5">
+                  $79
+                  <span class="text-small">/month</span>
+                </span>
+              </td>
+              <td>
+                <span class="display-5">
+                  $199
+                  <span class="text-small">/ month</span>
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <th scope="row" class="text-right">
+                Number of Google Accounts
+                
+              </th>
+              <td>1</td>
+              <td>1</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-right">
+                Number of websites 
+                
+              </th>
+              <td>1</td>
+              <td>10</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Number of SEO tests
+                
+              </th>
+              <td>Unlimited</td>
+              <td>Unlimited</td>
+              <td>Unlimited</td>
+            </tr>
+            
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <%= link_to 'Select Growth', {:action => :create, :@shop => @shop.slug, :name => "Growth", :test => nil, :price => 29, :trial => 0}, :method => :post, class: "btn btn-lg btn-success text-white" %>
+              </td>
+              <td>
+                <%= link_to 'Select Business', {:action => :create, :@shop => @shop.slug, :name => "Business", :test => nil, :price => 79, :trial => 0}, :method => :post, class: "btn btn-lg btn-success text-white" %>
+              </td>
+              <td>
+                <%= link_to 'Select Agency', {:action => :create, :@shop => @shop.slug, :name => "Agency", :test => nil, :price => 199, :trial => 0}, :method => :post, class: "btn btn-lg btn-success text-white" %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <% if @recurring_application_charge.present? %>
+          <span>Looking to stop subscriptions? 
+            <%= link_to 'Cancel Plan', shop_recurring_application_charge_path(@shop), method: :delete, class: "btn btn-danger" %>
+          </span>
+        <% end %>
+      </div>
+      <!--end of col-->
+      <hr>
+    </div>
+    
+    <!--end of row-->
+  </div>
+  <!--end of container-->
+</section>
