@@ -1,0 +1,117 @@
+<%= render partial: 'shared/header', :locals => { :active => 'Home' } %>
+<div class="main-container bg-white">
+  <section class="space-md pb-0 mb-0">
+    <div class="bg-white">
+      <div class="container">
+        <% if notice  %>
+          <div class="row">
+            <div class="col-12">
+              <div class="alert alert-warning text-small" role="alert">
+                <i class="icon-shield"></i>
+                <span>
+                    <%= notice %>
+                </span>
+                <%= link_to "Connect New Google Search Console.", '/auth/google_oauth2' , class: "" %>
+              </div>
+              
+            </div>
+          </div>
+        <% end %>
+        <ul class="row feature-list feature-list-sm">
+          <li class="col-12 mb-3">
+          
+                <div class="row justify-content-between align-items-center mb-3">
+                  <div class="col-auto">
+                    <h5 class="h5"><%= @page.url %></h5>
+                  </div>
+                  
+                  <!--end of col-->
+                </div>
+                <div class="row flex-md-row card card-lg">
+                  <div class="col-12 col-md-6 card-body">
+                    <div>
+                      <p class="h4 mb-0 text-muted text-small">Current Listing:</p>
+                      <div class="card card-sm mt-0 mb-3">
+                        <div class="card-body">
+                          <h4 class="mb-0" style="color: #1a0dab;"><%= @title %></h4>
+                          <span class="mb-0 mt-0" style="color: #006621;"><%= @page.url %></span>
+                          <p class="mt-0" style="color: #545454;">
+                            <%= @meta_description %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <!--end of col-->
+                  <div class="col-12 col-md-6 card-body bg-secondary">
+                    <div class="text-left mb-2">
+                      <h4 class="h4 mb-2">Create New Test</h4>
+                    </div>
+                    <%= simple_form_for [:admin, @shop, @page, @test], html: { class: "mb-4"}  do |f| %>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="signup-email">Page Title
+                              <span class="text-red">*</span>
+                            </label>
+                            <%= f.hidden_field :previous_title, :value => @title %>
+                            <%= f.text_area :title, cols: "30", rows: "2", placeholder: "Enter new page title for this page", class: 'input form-control m-b-md' %>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12" style="padding-right: 0px;">
+                          <div class="form-group">
+                            <label for="first-name">Meta Description
+                              <span class="text-red">*</span>
+                            </label>
+                            <%= f.hidden_field :starting_date, :value => @starting_date %>
+                            <%= f.hidden_field :one_week_before_starting_date, :value => @one_week_before_starting_date %>
+                            <%= f.hidden_field :one_week_before_ending_date, :value => @one_week_before_ending_date %>
+                            <%= f.hidden_field :two_week_before_starting_date, :value => @two_week_before_starting_date %>
+                            <%= f.hidden_field :two_week_before_ending_date, :value => @two_week_before_ending_date %>
+                            <%= f.hidden_field :four_week_before_starting_date, :value => @four_week_before_starting_date %>
+                            <%= f.hidden_field :four_week_before_ending_date, :value => @four_week_before_ending_date %>
+                            <%= f.hidden_field :one_week_after_starting_date, :value => @one_week_after_starting_date %>
+                            <%= f.hidden_field :one_week_after_ending_date, :value => @one_week_after_ending_date %>
+                            <%= f.hidden_field :two_week_after_starting_date, :value => @two_week_after_starting_date %>
+                            <%= f.hidden_field :two_week_after_ending_date, :value => @two_week_after_ending_date %>
+                            <%= f.hidden_field :four_week_after_starting_date, :value => @four_week_after_starting_date %>
+                            <%= f.hidden_field :four_week_after_ending_date, :value => @four_week_after_ending_date %>
+                            <%= f.hidden_field :previous_description, :value => @meta_description %>
+                            <%= f.hidden_field :shop_id, :value => @shop.id %>
+                            <%= f.hidden_field :page_id, :value => @page.id %>
+                            <%= f.hidden_field :ending_date, :value => @ending_date %>
+                            <%= f.hidden_field :shopify_pages, :value => @shopify_pages %>
+                            <%= f.text_area :description, cols: "30", rows: "5", placeholder: "Enew a new meta description. Include important keywords and a clear call to action.", class: 'input form-control m-b-md' %>
+                           
+                          </div>
+                        </div>
+                      </div>                                     
+                      <div class="text-left mt-2">
+                          <button type="submit" class="btn btn-lg btn-success">Save & Start Test</button>
+                      </div>
+                      <div class="text-left">
+                        <span class="text-small text-muted">By clicking 'Save & Start Test' you will be changing the page title and meta description of <%= @page.url %> on your live store
+                        </span>
+                      </div>
+                    <% end %>
+                    
+                  
+                  
+                  </div>
+                  <!--end of col-->
+                </div>
+           
+            </div>
+          </li>
+        </ul>
+        <!--end of row-->
+      </div>
+      <!--end of container-->
+    </div>
+  </section>
+  
+</div>
