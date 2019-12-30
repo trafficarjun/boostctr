@@ -1,0 +1,81 @@
+%p#notice= notice
+%h1 Tests
+%table.table.table-hover.align-items-center.table-borderless
+  %thead
+    %tr
+      %th{:scope => "col"} Title
+      %th{:scope => "col"} PreviousDate
+      %th{:scope => "col"} OneWeekAfter
+      %th{:scope => "col"} TwoWeekAfter
+      %th{:scope => "col"} FourWeekAfter
+      %th{:scope => "col"}
+  %tbody
+    - @tests.each do |test|
+      %tr.bg-white
+        %th{:scope => "row"}
+          .media.align-items-center
+            .media-body
+              = link_to shop_page_test_path(test.shop, test.page, test), { :class=>"" }, nil do
+                %span.h6.mb-0
+                  = test.title
+                  = test.is_test_over
+              %span.text-muted.text-small= test.page.url
+              ||
+              %span.text-muted.text-small= test.shop.shopify_domain
+       
+        %td
+          .media.align-items-center
+            .media-body
+              %p.text-small 
+                Status:
+                = test.four_week_before_updated
+              %p.text-small 
+                Run this on 
+                = fix_time(test.four_week_before_ending_date + 3.days)
+              %span.text-muted.text-small= fix_time(test.four_week_before_starting_date)
+              ||
+              %span.text-muted.text-small= fix_time(test.four_week_before_ending_date)
+             
+        %td
+          .media.align-items-center
+            .media-body
+              %p.text-small 
+                Status:
+                = test.one_week_after_updated
+              %p.text-small 
+                Run this on 
+                = fix_time(test.one_week_after_ending_date + 3.days)
+              %span.text-muted.text-small= fix_time(test.one_week_after_starting_date)
+              ||
+              %span.text-muted.text-small= fix_time(test.one_week_after_ending_date)
+        
+        %td
+          .media.align-items-center
+            .media-body
+              %p.text-small 
+                Status:
+                = test.two_week_after_updated
+              %p.text-small 
+                Run this on 
+                = fix_time(test.two_week_after_ending_date + 3.days)
+              %span.text-muted.text-small= fix_time(test.two_week_after_starting_date)
+              ||
+              %span.text-muted.text-small= fix_time(test.two_week_after_ending_date)
+        
+        %td
+          .media.align-items-center
+            .media-body
+              %p.text-small 
+                Status:
+                = test.four_week_after_updated
+              %p.text-small 
+                Run this on 
+                = fix_time(test.four_week_after_ending_date + 3.days)
+              %span.text-muted.text-small= fix_time(test.four_week_after_starting_date)
+              ||
+              %span.text-muted.text-small= fix_time(test.four_week_after_ending_date)
+        
+                
+        
+        %td= link_to 'End Test', shop_page_test_path(test.shop, test.page, test), method: :delete, data: { confirm: 'Are you sure?' }
+      %tr.table-divider

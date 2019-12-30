@@ -1,0 +1,47 @@
+%p#notice= notice
+%h1 Shops
+= link_to "Delete Everything", delete_everything_admin_shops_path
+%table.table.table-hover.align-items-center.table-borderless
+  %thead
+    %tr
+      %th{:scope => "col"} Shop
+      %th{:scope => "col"} Google
+      %th{:scope => "col"} Tests
+      %th{:scope => "col"} Pages
+      %th{:scope => "col"} Clicks
+      %th{:scope => "col"} created_at
+      %th{:scope => "col"}
+      %th{:scope => "col"}
+  %tbody
+    - @shops.each do |shop|
+      %tr.bg-white
+        %th{:scope => "row"}
+          .media.align-items-center
+            .media-body
+              = link_to insights_shop_pages_path(shop), { :class=>"" }, nil do
+                %span.h6.mb-0
+                  = shop.shopify_domain
+                  %span.badge.badge-secondary= shop.email
+              %span.text-muted.text-small= shop.shopify_token
+              ||
+              %span.text-muted.text-small= shop.domain
+        %td
+          .media.align-items-center
+            .media-body
+              %span.h6.mb-0
+                = shop.google_website
+                ||
+                %span.badge.badge-secondary= shop.google_email
+                ||
+              %span.text-muted.text-small= shop.google_token
+              ||
+              %span.text-muted.text-small= shop.google_refresh_token
+        %td
+          = link_to "#{shop.tests.count}", shop_tests_path(shop), class: "nav-link"
+        %td= shop.pages.count
+        %td= shop.clicks.count
+        %td= fix_time(shop.created_at)
+        %td= link_to 'Delete GSC Token', admin_shop_delete_gsc_path(shop), data: { confirm: 'Are you sure?' }
+        %td= link_to 'Reset Pages from GSC', admin_shop_reset_gsc_path(shop), data: { confirm: 'Are you sure?' }
+        %td= link_to 'Destroy', shop_path(shop), method: :delete, data: { confirm: 'Are you sure?' }
+      %tr.table-divider

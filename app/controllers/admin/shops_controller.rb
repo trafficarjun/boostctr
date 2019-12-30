@@ -1,7 +1,5 @@
 class Admin::ShopsController < ApplicationController
   
-  #before_action :require_admin
-
   def index
     @shops = Shop.all
   end

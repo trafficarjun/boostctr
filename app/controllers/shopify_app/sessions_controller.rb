@@ -8,6 +8,7 @@ module ShopifyApp
     end
 
     def new
+      User.create(email: Rails.application.credentials.admin_email, password: Rails.application.credentials.admin_password) if User.count == 0
       authenticate if sanitized_shop_name.present?
     end
 
