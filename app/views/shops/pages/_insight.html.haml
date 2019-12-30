@@ -1,0 +1,13 @@
+- cache insight do
+  %tr.bg-white{"data-controller" => "realtime-insight-partial", "data-realtime-partial-key" => "#{insight.to_gid_param}"}
+    %th{:scope => "row"}
+      .media.align-items-center
+        .media-body
+          = link_to shop_page_path(insight.page.shop, insight.page), { :class=>"" }, nil do
+            %span.h6.mb-0.text-left= insight.page.url
+    %td= insight.impressions
+    %td= insight.clicks
+    %td
+      = insight.ctr.to_f.round(2)
+      \%
+    %td= link_to "Tests", shop_page_path(insight.page.shop, insight.page)

@@ -1,0 +1,138 @@
+- cache test do
+  - if test.is_test_over
+    %tr.bg-secondary
+      %th{:scope => "row"}
+        = link_to shop_page_test_path(@shop, test.page, test), { :class=>"media align-items-center" }, nil do
+          .media-body
+            %span.h6.mb-0= test.page.url
+            %p.mt-0.mb-0
+              %span.text-muted.text-small
+                %i.icon-calendar.mr-1>
+                Test Started: #{fix_time(test.starting_date)}
+              |
+              %span.text-muted.text-small
+                Ended on: #{fix_time(test.ending_date)}
+            %span.badge.badge-secondary Test Finished
+      - if test.four_week_result_clicks
+        %td
+          - if test.four_week_result_clicks.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_clicks.to_i
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_clicks.to_i
+        %td
+          - if test.four_week_result_impressions.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_impressions.to_i
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_impressions.to_i
+        %td
+          - if test.four_week_result_ctr.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_ctr.to_i
+              \%
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_ctr.to_i
+              \%
+        %td
+          - if test.four_week_result_position.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_position.to_i
+              \%
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_position.to_i
+              \%
+      - else
+        %td
+          %span
+            \-
+        %td
+          %span
+            \-
+        %td
+          %span
+            \-
+        %td
+          %span
+            \-
+    %tr.table-divider
+  - else
+    %tr.bg-white
+      %th{:scope => "row"}
+        = link_to shop_page_test_path(@shop, test.page, test), { :class=>"media align-items-center" }, nil do
+          .media-body
+            %p.mt-0.mb-0
+              %span.text-muted.text-small
+                %i.icon-calendar.mr-1>
+                Test Started: #{fix_time(test.starting_date)}
+              |
+              %span.text-muted.text-small
+                Ending on: #{fix_time(test.ending_date)}
+            %span.badge.badge-secondary Ongoing
+      - if test.four_week_result_clicks
+        %td
+          - if test.four_week_result_clicks.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_clicks.to_i
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_clicks.to_i
+        %td
+          - if test.four_week_result_impressions.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_impressions.to_i
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_impressions.to_i
+        %td
+          - if test.four_week_result_ctr.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_ctr.to_i
+              \%
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_ctr.to_i
+              \%
+        %td
+          - if test.four_week_result_position.include?("green")
+            %span.text-green
+              %i.icon-arrow-up
+              = test.four_week_result_position.to_i
+              \%
+          - else
+            %span.text-red
+              %i.icon-arrow-down
+              = test.four_week_result_position.to_i
+              \%
+      - else
+        %td
+          %span
+            \-
+        %td
+          %span
+            \-
+        %td
+          %span
+            \-
+        %td
+          %span
+            \-
+    %tr.table-divider

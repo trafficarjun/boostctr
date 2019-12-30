@@ -1,0 +1,32 @@
+- cache keyword do
+  %tr.bg-secondary
+    %th.text-left{:scope => "row"}
+      .media.align-items-center
+        .media-body
+          %span.h6.mb-0
+            Keyword: #{keyword.name}
+    %td
+    %td
+    %td
+    %td
+  - keyword.page_keywords.each do |page_keyword|
+    %tr.bg-white
+      %th.text-left{:scope => "row"}
+        %span
+          = link_to shop_page_path(keyword.shop, page_keyword.page), { :class=>"" }, nil do
+            %span.h6.mb-0.text-left
+              Page: #{page_keyword.page.url}
+      %td
+        %span
+          = page_keyword.stats.first.impressions
+      %td
+        %span
+          = page_keyword.stats.first.clicks
+      %td
+        %span
+          = page_keyword.stats.first.ctr
+          \%
+      %td
+        %span
+          = page_keyword.stats.first.position
+  %tr.table-divider

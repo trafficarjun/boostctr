@@ -1,0 +1,82 @@
+= render partial: 'shared/header', :locals => { :active => 'Home' }
+.main-container.bg-white.mt-0
+  - flash.each do |key, value|
+    .row.justify-content-center.text-center.mb-3
+      .col-12
+        .alert.alert-danger.mt-3{:role => "alert"}
+          %i.icon-shield
+          %span
+            = value
+  %section.bg-white.mt-0.pt-2
+    .container.mt-0
+      .row.mb-5.mt-0
+        .col-12.text-right
+          %div
+            - if @tests.count != 0 || @shop.created_at + 60.minutes > Time.now
+              %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+              %span.text-small Insights got by analysing GSC last 90 days.
+            - else
+              %span.text-muted.text-small Insights got by analysing GSC last 90 days.
+          %div
+            %span.text-muted.text-small.text-right
+              %u Automatically updated every 30 days.
+      .row.justify-content-center.text-center.mb-5.mt-2
+        .col-12.col-md-10.col-lg-10.text-center.mb-3
+          %h5.dispslay-5.mb-2 Transactional vs Informational pages
+          .mb-3
+            - if @clicks.count < 5
+              %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+              %span.text-small Updating graph. Please check back in a few minutes.
+            - else
+              = line_chart transactional_charts_path({shop_id: @shop.id}), xtitle: "Google Ranking Position 1-10", ytitle: "CTR(%)"
+          %span.mt-5 Your store has different type of pages - product pages, collection pages, static  pages (contact, about etc), and blogs.. The SERP results for transactional pages (product, collection) and information(blog + other pages) are totally different. Lots more ads + plus competition on top of SERP results for transactional pages. So, while calculating CTRs it helps to compare a page to its parent group’s CTR - transactional or informational  - instead of the whole site.
+          .row.mt-3
+            - if @clicks.count > 5
+              .col.text-center
+                .mb-3
+                  = link_to "Product + Collection Pages", shop_pages_path(@shop, :sort => "products"), class: "btn btn-secondary mb-1"
+                  = link_to "Blog Pages", shop_pages_path(@shop, :sort => "blogs"), class: "btn btn-secondary mb-1"
+                  = link_to "Other Pages", shop_pages_path(@shop, :sort => "pages"), class: "btn btn-secondary mb-1"
+          .row
+            .col-12.text-center
+              %hr.shorts.mt-2.mb-0/
+      .row.justify-content-center.text-center.mb-5.mt-2
+        .col-12.col-md-10.col-lg-10.text-center.mb-3
+          %h5.displsay-5.mb-2 Generic vs long-tail keywords
+          .mb-3
+            - if @clicks.count < 5
+              %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+              %span.text-small Updating graph. Please check back in a few minutes.
+            - else
+              = line_chart longtail_charts_path({shop_id: @shop.id}), xtitle: "Google Ranking Position 1-10", ytitle: "CTR(%)"
+          %span.mt-5 GSC combines all keywords into one group.. But splitting it out shows how targeting long-tail (4+ words) usually has a higher CTR than 1,2 or 3 word keywords. The long tails keywords has less competition, and are generally easier to rank.
+          .row.mt-3
+            - if @clicks.count > 5
+              .col.text-center
+                .mb-3
+                  = link_to "1 word keywords", shop_keywords_path(@shop, :sort => "1_word"), class: "btn btn-secondary mb-1"
+                  = link_to "2 words keywords", shop_keywords_path(@shop, :sort => "2_word"), class: "btn btn-secondary mb-1"
+                  = link_to "3 words keywords", shop_keywords_path(@shop, :sort => "3_word"), class: "btn btn-secondary mb-1"
+                  = link_to "4+ words keywords", shop_keywords_path(@shop, :sort => "4_word"), class: "btn btn-secondary mb-1"
+          .row
+            .col-12.text-center
+              %hr.shorts.mt-2.mb-0/
+      .row.justify-content-center.text-center.section-intro
+        .col-12.col-md-10.col-lg-10.text-center.mb-3
+          %h5.dissplay-5.mb-2 Branded vs Non Branded Keywords
+          .mb-3
+            - if @clicks.count < 5
+              %img.navbar-brand-img{:alt => "BCC", :src => "https://bccfinal.s3.ap-south-1.amazonaws.com/uploading.gif", :style => "max-height: 1.4rem;"}/
+              %span.text-small Updating graph. Please check back in a few minutes.
+            - else
+              = line_chart branded_charts_path({shop_id: @shop.id}), xtitle: "Google Ranking Position 1-10", ytitle: "CTR(%)"
+          %span.mt-5 The average CTR shown by GSC combines both branded and non-branded keywords and is misleading. People searching for your brand already know you, and hence are more likely to click your listing. So, including branded keywords throws off the average site-wide CTR. Calculating CTRs separately for branded and non-branded shows a different/truer picture.
+          .row.mt-3
+            - if @clicks.count > 5
+              .col.text-center
+                .mb-3
+                  = link_to "Branded Keywords", shop_keywords_path(@shop, :sort => "branded"), class: "btn btn-secondary mb-1"
+                  = link_to "Non-branded Keywords", shop_keywords_path(@shop, :sort => "nonbranded"), class: "btn btn-secondary mb-1"
+          .row
+            .col-12.text-center
+              %hr.shorts.mt-2.mb-0/

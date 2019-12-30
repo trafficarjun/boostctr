@@ -1,0 +1,106 @@
+= render partial: 'shared/header', :locals => { :active => 'Home' }
+.main-container.bg-white
+  %section.space-md.pb-0.mb-0
+    .bg-white
+      .container
+        - if notice
+          .row
+            .col-12
+              .alert.alert-warning.text-small{:role => "alert"}
+                %i.icon-shield
+                %span
+                  = notice
+                = link_to "Connect New Google Search Console.", '/auth/google_oauth2' , class: ""
+        %ul.row.feature-list.feature-list-sm
+          %li.col-12.mb-3
+            .row.justify-content-between.align-items-center.mb-3
+              .col-auto
+                %h5.h5= @page.url
+            .row.flex-md-row.card.card-lg
+              .col-12.col-md-6.card-body
+                %div
+                  %p.h4.mb-0.text-muted.text-small Current Listing:
+                  .card.card-sm.mt-0.mb-3
+                    .card-body
+                      %h4.mb-0{:style => "color: #1a0dab;"}= @title
+                      %span.mb-0.mt-0{:style => "color: #006621;"}= @page.url
+                      %p.mt-0{:style => "color: #545454;"}
+                        = @meta_description
+                .card.card-borderless.bg-secondary.overflow-auto
+                  .card-body.overflow-auto{:style => "max-height: 250px;"}
+                    .d-flex.justify-content-between.mb-3
+                      %span.title-decorative Get your page titles right
+                    %h6 One of the most important parts of your page is the meta title tag. Search engines give a lot of importance to it, and this is also the first thing that your potential customers see about you on Google, as it appears in your Google search listing. It also appears on the top of browser windows, and is what is shared when people share your page on Twitter, Facebook and other social networks.
+                    %h6 Make sure to include your main 'focus keyword' in the beginning of the page title. Also, make sure that your page title is between 50-60 characters.
+                    .d-flex.justify-content-between.mt-3.mb-3
+                      %span.title-decorative Use engaging meta descriptions
+                    %h6 Meta descriptions provide a short summary of your page, and usually appers under the page titles on your Google listings. A well written meta description will encourage customers to click on your Google listing and visit your store. Your meta description should be ~150-160 characters.  Also include the keywords that you are hoping to rank for.
+              / end of col
+              .col-12.col-md-6.card-body.bg-secondary
+                .text-left.mb-2
+                  %h4.h4.mb-2 Create New Test
+                = simple_form_for [@shop, @page, @test], html: { class: "mb-4"}  do |f|
+                  .row
+                    .col-12
+                      .form-group
+                        %label{:for => "signup-email"}
+                          Page Title
+                          %span.text-red *
+                        = f.hidden_field :previous_title, :value => @title
+                        = f.text_area :title, cols: "30", rows: "2", placeholder: "Enter new page title for this page", class: 'input form-control m-b-md'
+                  .row
+                    .col-12{:style => "padding-right: 0px;"}
+                      .form-group
+                        %label{:for => "first-name"}
+                          Meta Description
+                          %span.text-red *
+                        = f.hidden_field :starting_date, :value => @starting_date
+                        = f.hidden_field :one_week_before_starting_date, :value => @one_week_before_starting_date
+                        = f.hidden_field :one_week_before_ending_date, :value => @one_week_before_ending_date
+                        = f.hidden_field :two_week_before_starting_date, :value => @two_week_before_starting_date
+                        = f.hidden_field :two_week_before_ending_date, :value => @two_week_before_ending_date
+                        = f.hidden_field :four_week_before_starting_date, :value => @four_week_before_starting_date
+                        = f.hidden_field :four_week_before_ending_date, :value => @four_week_before_ending_date
+                        = f.hidden_field :one_week_after_starting_date, :value => @one_week_after_starting_date
+                        = f.hidden_field :one_week_after_ending_date, :value => @one_week_after_ending_date
+                        = f.hidden_field :two_week_after_starting_date, :value => @two_week_after_starting_date
+                        = f.hidden_field :two_week_after_ending_date, :value => @two_week_after_ending_date
+                        = f.hidden_field :four_week_after_starting_date, :value => @four_week_after_starting_date
+                        = f.hidden_field :four_week_after_ending_date, :value => @four_week_after_ending_date
+                        = f.hidden_field :previous_description, :value => @meta_description
+                        = f.hidden_field :shop_id, :value => @shop.id
+                        = f.hidden_field :page_id, :value => @page.id
+                        = f.hidden_field :ending_date, :value => @ending_date
+                        = f.hidden_field :shopify_pages, :value => @shopify_pages
+                        = f.text_area :description, cols: "30", rows: "5", placeholder: "Enew a new meta description. Include important keywords and a clear call to action.", class: 'input form-control m-b-md'
+                  .text-left.mt-2
+                    %button.btn.btn-lg.btn-success{:type => "submit"} Save  Start Test
+                  .text-left
+                    %span.text-small.text-muted
+                      By clicking 'Save  Start Test' you will be changing the page title and meta description of #{@page.url} on your live store
+              / end of col
+      / end of row
+    / end of container
+- if @page_keywords.any?
+  %section.bg-white.space-0
+    .container
+      .row.justify-content-center.text-center.section-intro
+        .col-12.col-md-10.col-lg-10
+          %span.lead.mt-3
+            Keywords associated with this page.
+            %br>/
+            Try including keywords that have high impressions in your page titles and meta descriptions.
+        .container
+          .row
+            .col
+              %table.table.table-borderless.bg-secondary.table-hover.align-items-center
+                %thead
+                  %tr
+                    %th.text-left{:scope => "col"} Keyword
+                    %th.text-right{:scope => "col"} Impressions
+                    %th.text-right{:scope => "col"} Clicks
+                    %th.text-right{:scope => "col"} CTR
+                    %th.text-right{:scope => "col"} Position
+                %tbody
+                  = render partial: 'shops/pages/page_keyword', collection: @page_keywords
+            / end of col

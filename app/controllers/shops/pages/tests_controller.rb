@@ -1,4 +1,4 @@
-class Admin::Shops::Pages::TestsController < ApplicationController
+class Shops::Pages::TestsController < ApplicationController
   def new
     @shop = Shop.find_by slug: params[:shop_id]
     @page = @shop.pages.find_by slug: params[:page_id]
@@ -67,6 +67,9 @@ class Admin::Shops::Pages::TestsController < ApplicationController
         @meta_description = ""
       end
     end
+    #get all page_keywords
+    #display #page_keyword_stat in view
+    @page_keywords = @page.page_keywords
   end
   
   def show
@@ -81,38 +84,40 @@ class Admin::Shops::Pages::TestsController < ApplicationController
     @test = @page.tests.new(test_params)
     shopify_session = ShopifyAPI::Session.new(domain: @shop.shopify_domain, token: @shop.shopify_token, api_version: '2019-10')
     ShopifyAPI::Base.activate_session(shopify_session)
-    if @page.shopify_page_type == "products"
-      begin 
-        @shopify_page = ShopifyAPI::Product.find(@page.shopify_id)
-      rescue ActiveResource::ResourceNotFound
-        nil
-      end
-    elsif @page.shopify_page_type == "pages"
-      begin 
-        @shopify_page = ShopifyAPI::Page.find(@page.shopify_id)
-      rescue ActiveResource::ResourceNotFound
-        nil
-      end
-    elsif @page.shopify_page_type == "blogs"
-      begin 
-        @shopify_page = ShopifyAPI::Article.find(@page.shopify_id)
-      rescue ActiveResource::ResourceNotFound
-        nil
+    if @page.store
+      if @page.shopify_page_type == "products"
         begin 
-          @shopify_page = ShopifyAPI::Blog.find(@page.shopify_id)
+          @shopify_page = ShopifyAPI::Product.find(@page.store.shopify_id)
         rescue ActiveResource::ResourceNotFound
           nil
         end
-      end
-    elsif @page.shopify_page_type == "collections"
-      begin 
-        @shopify_page = ShopifyAPI::CustomCollection.find(@page.shopify_id)
-      rescue ActiveResource::ResourceNotFound
-        nil
+      elsif @page.shopify_page_type == "pages"
         begin 
-          @shopify_page = ShopifyAPI::SmartCollection.find(@page.shopify_id)
+          @shopify_page = ShopifyAPI::Page.find(@page.store.shopify_id)
         rescue ActiveResource::ResourceNotFound
           nil
+        end
+      elsif @page.shopify_page_type == "blogs"
+        begin 
+          @shopify_page = ShopifyAPI::Article.find(@page.store.shopify_id)
+        rescue ActiveResource::ResourceNotFound
+          nil
+          begin 
+            @shopify_page = ShopifyAPI::Blog.find(@page.store.shopify_id)
+          rescue ActiveResource::ResourceNotFound
+            nil
+          end
+        end
+      elsif @page.shopify_page_type == "collections"
+        begin 
+          @shopify_page = ShopifyAPI::CustomCollection.find(@page.store.shopify_id)
+        rescue ActiveResource::ResourceNotFound
+          nil
+          begin 
+            @shopify_page = ShopifyAPI::SmartCollection.find(@page.store.shopify_id)
+          rescue ActiveResource::ResourceNotFound
+            nil
+          end
         end
       end
     end
@@ -123,15 +128,14 @@ class Admin::Shops::Pages::TestsController < ApplicationController
         desc_metafield = ShopifyAPI::Metafield.new(:namespace => "global", :key => "description_tag", :value => @test.description, :value_type => "string")
         @shopify_page.add_metafield(title_metafield)
         @shopify_page.add_metafield(desc_metafield)
-        SearchConsole::GetFirstDataForTestWorker.perform_async(@shop.id, @page.id, @test.id)
-        format.html { redirect_to admin_shop_page_test_path(@shop, @page, @test), notice: 'Test was created and we have updated the page title and meta description tags. The results for this test will be updated in 7, 14 and 30 days.' }
+        format.html { redirect_to shop_page_test_path(@shop, @page, @test), notice: 'Test was created and we have updated the page title and meta description tags. The results for this test will be updated in 7, 14 and 30 days.' }
         format.json { render :show, status: :created, location: @test }
       else
         if @shopify_page != nil
           @title = @shopify_page.metafields.select { |attribute| attribute.namespace == 'global' && attribute.key == "title_tag" }.first.value
           @meta_description = @shopify_page.metafields.select { |attribute| attribute.namespace == 'global' && attribute.key == "description_tag" }.first.value
         end
-        format.html { redirect_to new_admin_shop_page_test_path(@shop, @page), notice: 'Please sync your Google Search Console account to the Shopify account before you start updating SEO titles.' }
+        format.html { redirect_to new_shop_page_test_path(@shop, @page), notice: 'Please sync your Google Search Console account to the Shopify account before you start updating SEO titles.' }
         format.json { render json: @test.errors, status: :unprocessable_entity }
       end
     end
@@ -147,7 +151,7 @@ class Admin::Shops::Pages::TestsController < ApplicationController
     @test.update(is_test_over: true, ending_date: ending_date, two_week_after_ending_date: two_week_after_ending_date, 
       four_week_after_ending_date: four_week_after_ending_date
     )
-    redirect_to admin_shop_page_test_path(@shop, @page, @test), notice: 'Test was successfully ended.' 
+    redirect_to shop_page_test_path(@shop, @page, @test), notice: 'Test was successfully ended.' 
   end
   
   private

@@ -1,0 +1,20 @@
+- cache page_keyword do
+  - page_keyword.stats.each do |stat|
+    %tr.bg-white.text-left
+      %th{:scope => "row"}
+        .media.align-items-center
+          .media-body
+            %span.h6.mb-0= stat.page_keywords.first.keyword.name
+      %td.text-right
+        %span
+          = stat.impressions
+      %td.text-right
+        %span.text-right
+          = stat.clicks
+      %td.text-right
+        %span.text-right
+          = stat.ctr
+          \%
+      %td.text-right
+        %span.text-right
+          = stat.position
