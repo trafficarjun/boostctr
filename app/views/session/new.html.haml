@@ -1,0 +1,9 @@
+.container-fluid.container-fill-height.mt-5
+  .container-content-middle.mt-5
+    = form_tag session_index_path, class: 'm-x-auto text-center app-login-form' do
+      .form-group
+        = email_field_tag :email, '',  placeholder: "Email", class: 'input form-control'
+      .form-group.m-b-md
+        = password_field_tag :password, '', placeholder: "Password", class: 'form-control'
+      .m-b-lg
+        %button.btn.btn-primary Log In

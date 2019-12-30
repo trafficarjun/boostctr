@@ -28,7 +28,12 @@ Rails.application.routes.draw do
     end
   end
   
+  get 'sign_in', to: "session#new"
+  get 'sign_out', to: 'session#destroy'
+  resources :session, only: [:create]
+  
   namespace :admin do 
+    resources :tests 
     resources :shops do 
       collection do 
         get 'delete_everything', to: 'shops#delete_everything'
