@@ -13,6 +13,13 @@ Rails.application.routes.draw do
       end
       resources :tests, module: :pages
     end
+    resource :recurring_application_charge, only: [:show, :destroy, :create], module: :shops do
+      post 'create_subscription', to: 'recurring_application_charge#recurring_application_charge'
+      collection do
+        get :callback
+        post :customize
+      end
+    end
   end
   
   get 'auth/google_oauth2/callback', to: 'sessions#googleAuth'
