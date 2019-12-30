@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
   
   resources :shops, only: [:show, :destroy, :update] do 
+    resources :keywords, module: :shops 
+    resources :tests, module: :shops 
     resources :pages, module: :shops do 
       collection do 
         get 'insights', to: 'pages#insights'
@@ -17,6 +19,14 @@ Rails.application.routes.draw do
   
   get 'select_website', to: 'search_console#select_website'
   get 'downloading_data', to: 'search_console#downloading_data'
+  
+  resources :charts do 
+    collection do 
+      get "branded", to: "charts#branded"
+      get 'longtail', to: "charts#longtail"
+      get 'transactional', to: "charts#transactional"
+    end
+  end
   
   namespace :admin do 
     resources :shops do 

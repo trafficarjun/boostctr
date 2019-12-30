@@ -1,0 +1,639 @@
+= render partial: 'shared/header', :locals => { :active => 'Home' }
+.main-container.bg-white
+  %section.space-md
+    .bg-white
+      .container
+        .row
+          .col-12
+            - if notice
+              .alert.alert-warning.text-small{:role => "alert"}
+                %i.icon-shield
+                %span
+                  = notice
+            .text-left.mb-2
+              %h4.h4.mb-2
+                %i.icon-link.mr-1
+                = @page.url
+                - if !@test.is_test_over
+                  %span.badge.badge-success Test Ongoing
+                - else
+                  %span.badge.badge-danger Test Over
+            .alert.alert-info.mt-4.mb-0{:role => "alert"}
+              %i.icon-flash
+              %span
+                Google usually indexes a test within 1-3 days, so we will allow 3 days before we consider a test to be started.
+              .row.mt-2
+                .col-12.col-lg-9
+                  %span
+                    %div
+                      %i.icon-calendar.mr-1>
+                      Test Started: #{fix_time(@test.starting_date)}
+                    %span
+                      %i.icon-calendar.mr-1>
+                      Ending on: #{fix_time(@test.ending_date)}
+        / end of row
+      / end of container
+    .container.mt-3
+      .row.flex-md-row.card.card-lg.bg-secondary
+        .col-12.col-md-6.card-body
+          %div
+            %p.h4.mb-0.text-muted.text-small Listing before test (Old Listing):
+            .card.card-sm.mt-0.mb-3.bg-secondary{:style => "border: 1px solid white;"}
+              .card-body
+                %h4.mb-0{:style => "color: #1a0dab;"}= @test.previous_title
+                %span.mb-0.mt-0{:style => "color: #006621;"}= @test.page.url
+                %p.mt-0{:style => "color: #545454;"}
+                  = @test.previous_description
+        / end of col
+        .col-12.col-md-6.card-body
+          %div
+            %p.h4.mb-0.text-muted.text-small
+              %strong Listing after test started (Current Listing):
+            .card.card-sm.mt-0.mb-3
+              .card-body
+                %h4.mb-0{:style => "color: #1a0dab;"}= @test.title
+                %span.mb-0.mt-0{:style => "color: #006621;"}= @test.page.url
+                %p.mt-0{:style => "color: #545454;"}
+                  = @test.description
+        / end of col
+      .alert.alert-secondary.mt-5{:role => "alert"}
+        %i.icon-flash
+        %span
+          Google Search Console data is usually 3 days behind, so the results for each test periord will be updated 3 days post the date.
+      .row.mt-3
+        .col
+          %table.table.table-borderless.table-hover.align-items-center
+            %thead
+              %tr
+                %th{:scope => "col"}
+                %th{:scope => "col"} Clicks
+                %th{:scope => "col"} Impressions
+                %th{:scope => "col"} CTR
+                %th{:scope => "col"} Position
+            %tbody
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 Old Listing: One week performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        = fix_time(@test.one_week_before_starting_date)
+                        to #{fix_time(@test.one_week_before_ending_date)}
+                - if @test.one_week_before_updated
+                  %td
+                    %span
+                      = @test.one_week_before_clicks
+                  %td
+                    %span
+                      = @test.one_week_before_impressions
+                  %td
+                    %span
+                      = @test.one_week_before_ctr
+                      \%
+                  %td
+                    %span
+                      = @test.one_week_before_position
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 New Listing: One week performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        = fix_time(@test.one_week_after_starting_date)
+                        to #{fix_time(@test.one_week_after_ending_date)}
+                - if @test.one_week_after_updated
+                  %td
+                    %span
+                      = @test.one_week_after_clicks
+                  %td
+                    %span
+                      = @test.one_week_after_impressions
+                  %td
+                    %span
+                      = @test.one_week_after_ctr
+                      \%
+                  %td
+                    %span
+                      = @test.one_week_after_position
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+              %tr.bg-secondary
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      - if (Time.current.to_date + 3.days) > (@test.one_week_after_ending_date)
+                        %span.h6.mb-0 One Weeks Results
+                      - else
+                        %span.h6.mb-0
+                          One Weeks Results
+                          %span.text-orange.text-small
+                            (#{(@test.one_week_after_ending_date.to_date - (Time.current.to_date + 3.days)).to_i} days remaining to complete test)
+                - if @test.one_week_after_updated
+                  %td
+                    - if @test.one_week_result_clicks
+                      - if @test.one_week_result_clicks == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.one_week_result_clicks == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.one_week_result_clicks_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.one_week_result_clicks.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.one_week_result_clicks.to_i
+                          \%
+                  %td
+                    - if @test.one_week_result_impressions
+                      - if @test.one_week_result_impressions == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.one_week_result_impressions == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.one_week_result_impressions_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.one_week_result_impressions.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.one_week_result_impressions.to_i
+                          \%
+                  %td
+                    - if @test.one_week_result_ctr
+                      - if @test.one_week_result_ctr == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.one_week_result_ctr == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.one_week_result_ctr_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.one_week_result_ctr.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.one_week_result_ctr.to_i
+                          \%
+                  %td
+                    - if @test.one_week_result_position == "INF"
+                      - if @test.one_week_result_position == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.one_week_result_position == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.one_week_result_position_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.one_week_result_position.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.one_week_result_position.to_i
+                          \%
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+        / end of col
+      .row.mt-3
+        .col
+          %table.table.table-borderless.table-hover.align-items-center
+            %thead
+              %tr
+                %th{:scope => "col"}
+                %th{:scope => "col"} Clicks
+                %th{:scope => "col"} Impressions
+                %th{:scope => "col"} CTR
+                %th{:scope => "col"} Position
+            %tbody
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 Old Listing: Two week performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        = fix_time(@test.two_week_before_starting_date)
+                        to #{fix_time(@test.two_week_before_ending_date)}
+                - if @test.two_week_before_updated
+                  %td
+                    %span
+                      = @test.two_week_before_clicks
+                  %td
+                    %span
+                      = @test.two_week_before_impressions
+                  %td
+                    %span
+                      = @test.two_week_before_ctr
+                      \%
+                  %td
+                    %span
+                      = @test.two_week_before_position
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 New Listing: Two week performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        = fix_time(@test.two_week_after_starting_date)
+                        to #{fix_time(@test.two_week_after_ending_date)}
+                - if @test.two_week_after_updated
+                  %td
+                    %span
+                      = @test.two_week_after_clicks
+                  %td
+                    %span
+                      = @test.two_week_after_impressions
+                  %td
+                    %span
+                      = @test.two_week_after_ctr
+                      \%
+                  %td
+                    %span
+                      = @test.two_week_after_position
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+              %tr.bg-secondary
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      - if (Time.current.to_date + 3.days) > (@test.two_week_after_ending_date)
+                        %span.h6.mb-0 Two Weeks Results
+                      - else
+                        %span.h6.mb-0
+                          Two Weeks Results
+                          %span.text-orange.text-small
+                            (#{(@test.two_week_after_ending_date.to_date - (Time.current.to_date + 3.days)).to_i} days remaining to complete test)
+                - if @test.two_week_after_updated
+                  %td
+                    - if @test.two_week_result_clicks == "INF"
+                      - if @test.two_week_result_clicks == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.two_week_result_clicks == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.two_week_result_clicks_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.two_week_result_clicks.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.two_week_result_clicks.to_i
+                          \%
+                  %td
+                    - if @test.two_week_result_impressions
+                      - if @test.two_week_result_impressions == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.two_week_result_impressions == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.two_week_result_impressions_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.two_week_result_impressions.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.two_week_result_impressions.to_i
+                          \%
+                  %td
+                    - if @test.two_week_result_ctr
+                      - if @test.two_week_result_ctr == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.two_week_result_ctr == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.two_week_result_ctr_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.two_week_result_ctr.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.two_week_result_ctr.to_i
+                          \%
+                  %td
+                    - if @test.two_week_result_position
+                      - if @test.two_week_result_position == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.two_week_result_position == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.two_week_result_position_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.two_week_result_position.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.two_week_result_position.to_i
+                          \%
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+        / end of col
+    .container.mt-3
+      .row
+        .col
+          %table.table.table-borderless.table-hover.align-items-center
+            %thead
+              %tr
+                %th{:scope => "col"}
+                %th{:scope => "col"} Clicks
+                %th{:scope => "col"} Impressions
+                %th{:scope => "col"} CTR
+                %th{:scope => "col"} Position
+            %tbody
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 Old Listing: One month performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        = fix_time(@test.four_week_before_starting_date)
+                        to #{fix_time(@test.four_week_before_ending_date)}
+                - if @test.four_week_before_updated
+                  %td
+                    %span
+                      = @test.four_week_before_clicks
+                  %td
+                    %span
+                      = @test.four_week_before_impressions
+                  %td
+                    %span
+                      = @test.four_week_before_ctr
+                      \%
+                  %td
+                    %span
+                      = @test.four_week_before_position
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+              %tr.bg-white
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      %span.h6.mb-0 New Listing: One month performance
+                      %span.text-muted
+                        %i.icon-calendar.mr-1.text-muted
+                        = fix_time(@test.four_week_after_starting_date)
+                        to #{fix_time(@test.four_week_after_ending_date)}
+                - if @test.four_week_after_updated
+                  %td
+                    %span
+                      = @test.four_week_after_clicks
+                  %td
+                    %span
+                      = @test.four_week_after_impressions
+                  %td
+                    %span
+                      = @test.four_week_after_ctr
+                      \%
+                  %td
+                    %span
+                      = @test.four_week_after_position
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+              %tr.bg-secondary
+                %th{:scope => "row"}
+                  .media.align-items-center
+                    .media-body
+                      - if (Time.current.to_date + 3.days) > (@test.four_week_after_ending_date)
+                        %span.h6.mb-0 One Month Results
+                      - else
+                        %span.h6.mb-0
+                          One Month Results
+                          %span.text-orange.text-small
+                            (#{(@test.four_week_after_ending_date.to_date - (Time.current.to_date + 3.days)).to_i} days remaining to complete test)
+                - if @test.four_week_after_updated
+                  %td
+                    - if @test.four_week_result_clicks
+                      - if @test.four_week_result_clicks == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.four_week_result_clicks == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.four_week_result_clicks_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.four_week_result_clicks.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.four_week_result_clicks.to_i
+                          \%
+                  %td
+                    - if @test.four_week_result_impressions
+                      - if @test.four_week_result_impressions == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.four_week_result_impressions == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.four_week_result_impressions_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.four_week_result_impressions.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.four_week_result_impressions.to_i
+                          \%
+                  %td
+                    - if @test.four_week_result_ctr
+                      - if @test.four_week_result_ctr == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.four_week_result_ctr == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.four_week_result_ctr_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.four_week_result_ctr.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.four_week_result_ctr.to_i
+                          \%
+                  %td
+                    - if @test.four_week_result_position
+                      - if @test.four_week_result_position == "INF"
+                        %span.text-green
+                          %i.icon-arrow-up
+                          INF%
+                      - elsif @test.four_week_result_position == "NAN"
+                        %span
+                          NAN
+                      - elsif @test.four_week_result_position_greater == true
+                        %span.text-green
+                          %i.icon-arrow-up
+                          = @test.four_week_result_position.to_i
+                          \%
+                      - else
+                        %span.text-red
+                          %i.icon-arrow-down
+                          = @test.four_week_result_position.to_i
+                          \%
+                - else
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+                  %td
+                    %span
+                      \-
+        / end of col
+      %p.mt-0
+      .text-muted.text-small
+        %i.icon-flash.mr-1>
+        Default Testing Time:
+        %span{:style => "color: #333;"}
+          By default each test runs for 4 weeks. This is ample time to see if the change you made is positive or negative. Google
+          %span
+      .text-muted.text-small
+        %i.icon-flash.mr-1>
+        Best Practices:
+        %span{:style => "color: #333;"}
+          When doing a test, aim to look at a window of time that gets you 2000 or more impressions on the search results. The higher the number, the better.
+          %span
+      .text-muted.text-small
+        %i.icon-flash.mr-1>
+        Note:
+        %span{:style => "color: #333;"}
+          Outside influences can change our confidence in the test—from a holiday weekend to seasonality to ranking changes—so it’s important to be wary of variables like that when setting up tests.
+          %span
+      - if !@test.is_test_over
+        = link_to 'End Test', shop_page_test_path(@shop, @test.page, @test), method: :delete, class: "btn btn-danger mt-3", data: { confirm: 'Are you sure you want to end this test?' }
