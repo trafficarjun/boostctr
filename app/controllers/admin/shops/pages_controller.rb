@@ -1,5 +1,5 @@
 class Admin::Shops::PagesController < ApplicationController
-  
+  before_action :require_user
   def show
     @shop = Shop.find_by slug: params[:shop_id]
     @page = @shop.pages.find_by slug: params[:id]
