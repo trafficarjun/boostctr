@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_30_062132) do
+ActiveRecord::Schema.define(version: 2020_01_02_043629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_062132) do
     t.string "google_email"
     t.datetime "expiresat"
     t.boolean "shopify_domain_google_website_match", default: true
+    t.boolean "needs_help", default: true
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 
