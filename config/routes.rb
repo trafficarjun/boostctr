@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'privacy', to: "front#privacy"
   
   resources :shops, only: [:show, :destroy, :update] do 
+    get 'needs_seo_help', to: 'shops#needs_seo_help'
     resources :keywords, module: :shops 
     resources :tests, module: :shops 
     resources :pages, module: :shops do 

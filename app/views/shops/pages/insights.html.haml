@@ -3,12 +3,22 @@
   - flash.each do |key, value|
     .row.justify-content-center.text-center.mb-3
       .col-12
-        .alert.alert-danger.mt-3{:role => "alert"}
+        .alert.alert-info.mt-3{:role => "alert"}
           %i.icon-shield
           %span
             = value
   %section.bg-white.mt-0.pt-2
     .container.mt-0
+      -if @shop.needs_help
+        .row.justify-content-center.text-center.mb-3.mt-2
+          .col-12.col-md-10.col-lg-10.text-center.mb-3
+            .alert.alert-info.text-smalls{:role => "alert"}
+              %div
+                %i.icon-shield
+                Need helping writing professional, unique page titles and meta descriptions? 
+              %div
+                Having unique handwritten page  title and meta descriptions that are SEO friendly - will make your Google Listing stand out, and improve CTRs to your store. I can help you write these meta tags within a couple of days. There is no extra charges for this.             
+                = link_to 'Click this link if you need help writing SEO copy that will help you sell and convert.', shop_needs_seo_help_path(@shop)
       .row.mb-5.mt-0
         .col-12.text-right
           %div

@@ -2,12 +2,12 @@ ShopifyApp.configure do |config|
   config.application_name = "My Shopify App"
   
   #dev 
-  config.api_key = Rails.application.credentials.shopify_dev_api_key
-  config.secret = Rails.application.credentials.shopify_dev_secret
+  #config.api_key = Rails.application.credentials.shopify_dev_api_key
+  #config.secret = Rails.application.credentials.shopify_dev_secret
   
   #prod
-  #config.api_key = Rails.application.credentials.shopify_prod_api_key
-  #config.secret = Rails.application.credentials.shopify_prod_secret
+  config.api_key = Rails.application.credentials.shopify_prod_api_key
+  config.secret = Rails.application.credentials.shopify_prod_secret
   
   config.old_secret = ""
   config.scope = "read_products, write_products, read_content, write_content" # Consult this page for more scope options:
