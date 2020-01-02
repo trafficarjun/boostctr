@@ -54,7 +54,7 @@ module ShopifyApp
     def authenticate
       return render_invalid_shop_error unless sanitized_shop_name.present?
       session['shopify.omniauth_params'] = { shop: sanitized_shop_name }
-
+      
       session[:return_to] = params[:return_to] if params[:return_to]
 
       if user_agent_can_partition_cookies
@@ -90,7 +90,6 @@ module ShopifyApp
         render_invalid_shop_error
         return false
       end
-
       true
     end
 

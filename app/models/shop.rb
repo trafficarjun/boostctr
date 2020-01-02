@@ -26,6 +26,10 @@ class Shop < ActiveRecord::Base
     end
   end
   
+  def send_login_notifcation_email
+    AppMailer.send_shop_sign_in(@shop.shopify_domain).deliver
+  end
+  
   def free_plan
     if !Plan.any?
       Plan.create(name: "Free", price: "0")

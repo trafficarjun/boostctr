@@ -51,6 +51,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.9.0'
   gem 'pry'
   gem 'pry-nav'
+  gem 'letter_opener'
 end
 
 group :development do
