@@ -1,5 +1,5 @@
 class Admin::ShopsController < ApplicationController
-  
+  before_action :require_user
   def index
     @shops = Shop.all
   end
