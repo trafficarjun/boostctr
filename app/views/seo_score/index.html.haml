@@ -1,0 +1,23 @@
+.main-container{:style => ""}
+  %section.bg-dark.space-lg
+    %img.bg-image{:alt => "Image", :src => "https://boostctr.s3.ap-south-1.amazonaws.com/graphic-bg-clouds-2.png"}/
+    .container
+      .row.text-center.justify-content-center.section-intro
+        .col-12.col-md-10.col-lg-8
+          %h1.display-3 Shopify Product Page SEO Scorer
+          %span.lead This tool will help you fix all your SEO errors on your Shopify Products page. It checks if the page passes a few important on-page SEO tests, and gives you recommendations on how to fix them.
+       
+      .row.no-gutters.justify-content-center
+        = form_with url: results_url, local: true, method: :get, html: { class: "text-left col-lg-8" } do |form|
+          .form-group
+            %label{:for => "Enter focus keyword"}
+              Enter focus keyword
+              %span.text-red *
+            = form.text_field :focus_keyword, placeholder: "Enter focus keyword", class: 'input form-control m-b-md', autofocus: true
+          .form-group
+            %label{:for => "Enter page URL"} 
+              Enter the Shopify product page URL
+              %span.text-red *
+            = form.text_field :page_url, placeholder: "Enter page URL", data: { behavior: "autocomplete" }, class: "form-control form-control-lg"
+          .text-center.mt-3
+            %button.btn.btn-lg.btn-primary{:type => "submit"} Get Product Page Score

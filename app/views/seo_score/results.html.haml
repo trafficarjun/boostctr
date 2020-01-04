@@ -1,0 +1,19 @@
+.main-container{:style => ""}
+  %section.bg-dark.space-lg.pt-5
+    %img.bg-image{:alt => "Image", :src => "https://boostctr.s3.ap-south-1.amazonaws.com/graphic-bg-clouds-2.png"}/
+    .container
+      .row
+        .col-md-8
+          .card.card-sm
+            .card-header.d-flex.bg-secondary.justify-content-between.align-items-center
+              %div
+                %span.mb-1{:style => ""}
+                  %h6
+                    %strong Keyword:
+                    = @keyword
+                %br/
+                %span{:style => ""}
+                  %h6
+                    %strong URL:
+                    = @url
+              

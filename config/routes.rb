@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get 'ui(/:action)', controller: 'ui'
   get 'privacy', to: "front#privacy"
   
+  resources :seo_score, only: [:index] 
+  get 'results', to: "seo_score#results"
+  
   resources :shops, only: [:show, :destroy, :update] do 
     get 'needs_seo_help', to: 'shops#needs_seo_help'
     resources :keywords, module: :shops 

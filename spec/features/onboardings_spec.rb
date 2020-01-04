@@ -36,7 +36,7 @@ feature "onboarding" do
   
   scenario "new user sign in via Shopify" do 
     visit root_path
-    expect(page).to have_content "Enter your shop domain to log in or install this app."
+    expect(page).to have_content "View on the Shopify App Store"
     
     shop = Fabricate(:shop)
     login(shop)
